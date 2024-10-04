@@ -18,4 +18,4 @@ scrape_configs:
     static_configs:
     - targets:
       # указывается адрес микросервиса
-      - fastapi_app:1702 
+      - fastapi_app:8081

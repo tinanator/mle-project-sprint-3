@@ -3,3 +3,5 @@ uvicorn[standard]
 catboost
 scikit-learn
 autofeat
+prometheus_fastapi_instrumentator
+requests

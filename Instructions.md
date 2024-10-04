@@ -46,27 +46,24 @@ curl -X POST -H "Content-Type: application/json" -d '{"KBinsDiscretizer__latitud
 
 ```bash
 # команда перехода в нужную директорию
-
+cd services
 # команда для запуска микросервиса в режиме docker compose
-
+docker compose up  --build
 ```
 
 ### Пример curl-запроса к микросервису
 
-```bash
-curl -X 'POST' \
-  'http://localhost:
-```
+curl -X POST -H "Content-Type: application/json" -d '{"KBinsDiscretizer__latitude_4.0": 0.0, "KBinsDiscretizer__longitude_3.0": 0.0,"building_type_int_4": 1.0, "building_type_int_6": 0.0, "KBinsDiscretizer__latitude_0.0": 0.0, "latitude": 0.0, "KBinsDiscretizer__longitude_1.0": -0.427130, "KBinsDiscretizer__latitude_2.0": 0.581639, "KBinsDiscretizer__longitude_4.0": 1.0, "building_type_int_2": 1.0, "ceiling_height": -0.427130, "KBinsDiscretizer__longitude_2.0": 0.0, "PolynomialFeatures__total_area^2": 0.118176, "floors_total": 9.0, "KBinsDiscretizer__latitude_3.0": 1.0, "building_type_int_1": 0.0, "kitchen_area": -0.623586, "PolynomialFeatures__total_area": -0.343767, "KBinsDiscretizer__longitude_0.0": 0.0, "has_elevator_True": 0.0}' http://localhost:8081/api/price/?user_id=1
 
 ## 4. Скрипт симуляции нагрузки
-Скрипт генерирует <...> запросов в течение <...> секунд ...
+Скрипт генерирует 105 запросов
 
 ```
 # команды необходимые для запуска скрипта
-...
-```
+cd services/ml_service
+python script.py
 
 Адреса сервисов:
-- микросервис: http://localhost:<port>
-- Prometheus: ...
-- Grafana: ...
+- микросервис: http://localhost:8081
+- Prometheus: http://localhost:9090
+- Grafana: http://localhost:3000

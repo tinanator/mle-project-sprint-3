@@ -162,11 +162,6 @@ class FastApiHandler:
 
 
 
-
-
-
-
-
 # from handler import FastApiHandler
 from fastapi import FastAPI
 from prometheus_fastapi_instrumentator import Instrumentator
@@ -178,11 +173,6 @@ app.handler = FastApiHandler()
 instrumentator = Instrumentator()
 instrumentator.instrument(app).expose(app)
 
-def metric_monitoring_mean(
-	lst_latency: List[float], 
-) -> float:
-	mean = np.mean(lst_latency)
-	return mean
 
 request_count = Counter(
     'app_request_count',
@@ -190,19 +180,16 @@ request_count = Counter(
     ['method', 'endpoint', 'http_status']
 )
 
-request_latency = Histogram(
-    'app_request_latency_seconds',  
-    'Application Request Latency',
+prediction_fail = Counter(
+    'app_prediction_bad',  
+    'Amount of bad predictions',
     ['method', 'endpoint']
 )
-
-import random
 
 @app.get("/")
 def read_root():
     start_time = time.time()
     request_count.labels('GET', '/', 200).inc()
-    request_latency.labels('GET', '/', 200).observe(time.time() - start_time)
     return {"Hello": "World"}
 
 @app.post("/api/price/") 
@@ -217,9 +204,6 @@ def get_price(user_id: str, model_params: dict):
     Returns:
         dict: Предсказанная стоимость.
     """
-
-
-
     all_params = {
             "user_id": user_id,
             "model_params": model_params
@@ -227,13 +211,9 @@ def get_price(user_id: str, model_params: dict):
     
     try:
         prediction = app.handler.handle(all_params)
-        request_count.labels('POST', '/api/price/', user_id).inc()
-        request_latency.labels('POST', '/api/price/', user_id).observe(time.time() - start_time)
         return prediction
     except Exception as e:
         print("Error in request")
-        # request_count.labels('POST', '/api/price/', user_id).inc()
-        # request_latency.labels('POST', '/api/price/', user_id).observe(time.time() - start_time)
 
 
     
