@@ -39,7 +39,7 @@ class FastApiHandler:
             'kitchen_area'
         ]
 
-        self.model_path = "../models/model"
+        self.model_path = "./models/model"
 
         self.load_model(model_path=self.model_path)
 

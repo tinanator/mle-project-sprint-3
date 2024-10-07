@@ -61,7 +61,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"KBinsDiscretizer__latitud
 ```
 # команды необходимые для запуска скрипта
 cd services/ml_service
-python script.py
+python test_service.py
 
 Адреса сервисов:
 - микросервис: http://localhost:8081
